@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    environment {
+        PATH = "/usr/share/man/man1:$PATH"
+    }
+    stages {
+        stage(hello) {
+            steps {
+                echo "hello world"
+            }
+        }
+        stage("code hello") {
+            steps {
+                echo "WELCOME TO MY WORLD"
+            }
+        }
+        stage(checkout) {
+            steps {
+                git credentialsId: 'gti_cred', url: 'https://github.com/jaga963/war-web-project.git'
+            }
+        }
+        stage(build) {
+            steps {
+                sh 'mvn package'
+            }
+        }
+    }
+}
